@@ -29,16 +29,16 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		auth.POST("/log-in", h.handleSingIn)
 	}
 
-	edit := router.Group("/edit", h.userIdentify)
-	{
-		edit.PUT("/:Id", h.handleUpdateNewsById)
-		edit.DELETE("/:Id", h.handleDeleteNewsById)
-	}
-
 	list := router.Group("/list", h.userIdentify)
 	{
 		list.GET("", h.handleGetAllNews)
 		list.GET("/:Id", h.handleGetNewsById)
+	}
+
+	edit := router.Group("/edit", h.userIdentify)
+	{
+		edit.PUT("/:Id", h.handleUpdateNewsById)
+		edit.DELETE("/:Id", h.handleDeleteNewsById)
 	}
 
 	return router
