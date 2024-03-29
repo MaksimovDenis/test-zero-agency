@@ -1,0 +1,261 @@
+basePath: /
+definitions:
+  handler.Err:
+    properties:
+      message:
+        type: string
+    type: object
+  handler.GetAllNewsResponse:
+    properties:
+      News:
+        items:
+          $ref: '#/definitions/zeroAgency.NewsWithCategories'
+        type: array
+      Success:
+        type: boolean
+    type: object
+  handler.logInInput:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  zeroAgency.NewsWithCategories:
+    properties:
+      Categories:
+        items:
+          type: integer
+        type: array
+      Content:
+        type: string
+      Id:
+        type: integer
+      Title:
+        type: string
+    type: object
+  zeroAgency.User:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact:
+    email: maksimovis74@gmail.com
+    name: Denis Maksimov
+  description: API Server for ZeroAgency Application
+  title: TESTCASE ZeroAgency
+paths:
+  /auth/log-in:
+    post:
+      consumes:
+      - application/json
+      description: login
+      parameters:
+      - description: credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.logInInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.Err'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.Err'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.Err'
+      summary: LogIn
+      tags:
+      - auth
+  /auth/sing-up:
+    post:
+      consumes:
+      - application/json
+      description: create account
+      parameters:
+      - description: account info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/zeroAgency.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.Err'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.Err'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.Err'
+      summary: SignUp
+      tags:
+      - auth
+  /edit/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete News by ID
+      parameters:
+      - description: News ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/zeroAgency.NewsWithCategories'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.Err'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.Err'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.Err'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete News By ID
+      tags:
+      - news
+    put:
+      consumes:
+      - application/json
+      description: Update News by ID
+      parameters:
+      - description: News ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/zeroAgency.NewsWithCategories'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.Err'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.Err'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.Err'
+      security:
+      - ApiKeyAuth: []
+      summary: Update News By ID
+      tags:
+      - news
+  /list:
+    get:
+      consumes:
+      - application/json
+      description: Get List of News
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.GetAllNewsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.Err'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.Err'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.Err'
+      security:
+      - ApiKeyAuth: []
+      summary: Get All News
+      tags:
+      - news
+  /list/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get News by ID
+      parameters:
+      - description: News ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/zeroAgency.NewsWithCategories'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.Err'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.Err'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.Err'
+      security:
+      - ApiKeyAuth: []
+      summary: Get News By ID
+      tags:
+      - news
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
