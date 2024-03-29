@@ -31,6 +31,12 @@ func (h *Handler) handleGetNewsById(c *gin.Context) {
 		newErrorResponse(c, http.StatusBadRequest, "invailed id params")
 	}
 
+	if id <= 0 {
+		logger.Log.Info("Invalid Id value: must be greater than zero")
+		newErrorResponse(c, http.StatusBadRequest, "Invalid id value: must be greater than zero")
+		return
+	}
+
 	list, err := h.service.NewsWithCategories.GetNewsById(id)
 	if err != nil {
 		logger.Log.Error("Failed to Get News By ID: ", err.Error())
@@ -104,6 +110,30 @@ func (h *Handler) handleUpdateNewsById(c *gin.Context) {
 		return
 	}
 
+	if input.Id <= 0 {
+		logger.Log.Info("Invalid Id value: must be greater than zero")
+		newErrorResponse(c, http.StatusBadRequest, "Invalid id value: must be greater than zero")
+		return
+	}
+
+	if input.Title == "" {
+		logger.Log.Error("Invalid title: cannot be empty")
+		newErrorResponse(c, http.StatusBadRequest, "invalid title: cannot be empty")
+		return
+	}
+
+	if input.Content == "" {
+		logger.Log.Error("Invalid content: cannot be empty")
+		newErrorResponse(c, http.StatusBadRequest, "invalid content: cannot be empty")
+		return
+	}
+
+	if len(input.Categories) == 0 {
+		logger.Log.Error("Invalid categories: must have at least one category")
+		newErrorResponse(c, http.StatusBadRequest, "invalid categories: must have at least one category")
+		return
+	}
+
 	if err := h.service.NewsWithCategories.UpdateNewsById(input); err != nil {
 		logger.Log.Error("Failed to Update News By ID: ", err.Error())
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
@@ -133,6 +163,12 @@ func (h *Handler) handleDeleteNewsById(c *gin.Context) {
 	if err != nil {
 		logger.Log.Info("invailed Id params", err)
 		newErrorResponse(c, http.StatusBadRequest, "invailed id params")
+	}
+
+	if id <= 0 {
+		logger.Log.Info("Invalid Id value: must be greater than zero")
+		newErrorResponse(c, http.StatusBadRequest, "Invalid id value: must be greater than zero")
+		return
 	}
 
 	if err := h.service.NewsWithCategories.DeleteNewsById(id); err != nil {

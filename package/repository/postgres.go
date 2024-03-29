@@ -32,6 +32,9 @@ func NewPostgresDB(cfg Config) (*sqlx.DB, error) {
 		return nil, err
 	}
 
+	db.SetMaxOpenConns(10)
+	db.SetMaxIdleConns(5)
+
 	//Check our connection to DB
 	err = db.Ping()
 	if err != nil {
