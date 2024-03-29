@@ -3,7 +3,7 @@ version: '3.8'
 services:
   test-zero-agency:
     build: ./
-    command: sh -c './wait-for-postgres.sh db ./test-zero-agency >> logs/app.log 2>&1'
+    command: ./wait-for-postgres.sh db ./test-zero-agency
     ports:
       - 8000:8000
     depends_on:
