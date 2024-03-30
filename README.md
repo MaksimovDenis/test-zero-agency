@@ -19,7 +19,7 @@ docker-compose up
 ```bash      
 http://localhost:8000/swagger/index.html
 ```  
-![image](https://github.com/MaksimovDenis/vk_restAPI/assets/44647373/5724c865-7c57-4601-b2ca-5b18f057808c)  
+![image](https://github.com/MaksimovDenis/vk_restAPI/assets/44647373/e089ba3b-4ce3-4731-a2f7-8fda13e16aa4)
 
 - Для авторизации необходимо зарегестрироваться, залогиниться и получить JWT токен.
 
