@@ -155,7 +155,7 @@ paths:
       summary: Delete News By ID
       tags:
       - news
-    put:
+    post:
       consumes:
       - application/json
       description: Update News by ID
@@ -165,6 +165,12 @@ paths:
         name: id
         required: true
         type: integer
+      - description: News information for update
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/zeroAgency.NewsWithCategories'
       produces:
       - application/json
       responses:

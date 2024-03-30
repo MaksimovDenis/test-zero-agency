@@ -89,11 +89,12 @@ func (h *Handler) handleGetAllNews(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "News ID"
+// @Param input body zeroAgency.NewsWithCategories true "News information for update"
 // @Success 200 {object} zeroAgency.NewsWithCategories
 // @Failure 400 {object} Err
 // @Failure 404 {object} Err
 // @Failure 500 {object} Err
-// @Router /edit/{id} [put]
+// @Router /edit/{id} [post]
 func (h *Handler) handleUpdateNewsById(c *gin.Context) {
 	logger.Log.Info("Handling Update News By Id")
 

@@ -123,7 +123,7 @@ const docTemplate = `{
             }
         },
         "/edit/{id}": {
-            "put": {
+            "post": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -147,6 +147,15 @@ const docTemplate = `{
                         "name": "id",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "description": "News information for update",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/zeroAgency.NewsWithCategories"
+                        }
                     }
                 ],
                 "responses": {

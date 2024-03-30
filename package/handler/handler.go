@@ -37,7 +37,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	edit := router.Group("/edit", h.userIdentify)
 	{
-		edit.PUT("/:Id", h.handleUpdateNewsById)
+		edit.POST("/:Id", h.handleUpdateNewsById)
 		edit.DELETE("/:Id", h.handleDeleteNewsById)
 	}
 
